@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import TextInput from "./TextInput";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -20,24 +21,18 @@ const Login = () => {
       <section className="bg-white p-8 xs:shadow-md shadow-none rounded">
           <h1 className="text-2xl mb-2 font-bold">Welcome</h1>
 
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-3">
             Login to your account to continue.
           </p>
 
           <form onSubmit={handleSubmit} className="mb-4">
             <div className="mb-4">
               <div className="">
-                <label htmlFor="username" className="block text-gray-700 mb-2">
-                  Username:
-                </label>
-                <input onChange={handleChange} type='text' id="username" value={data.username} className="w-full border border-gray-300 rounded py-2 px-3 mb-3" />
+                <TextInput label="Username:" onChange={handleChange} id="username" value={data.username} name="username" />
               </div>
 
               <div className="">
-                  <label htmlFor="password" className="block text-gray-700 mb-2">
-                    Password
-                  </label>
-                  <input onChange={handleChange} type='password' id="password" value={data.password} className="w-full border border-gray-300 rounded py-2 px-3" />
+                  <TextInput label="Password:" name="password" onChange={handleChange} type='password' id="password" value={data.password} />
 
               </div>
             </div>
