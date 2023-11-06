@@ -8,5 +8,8 @@ export default {
   screens: {
   xs: "475px",
   },
+  fontFamily: {
+    poppins:  ["Poppins", "sans-serif"],
+  },
 }
 
