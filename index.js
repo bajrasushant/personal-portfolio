@@ -10,28 +10,33 @@ const mongodb_uri = process.env.MONGODB_URI;
 const PORT = 3000
 
 
-app.post('/register', (req, res) => {
-    UserModel.create(req.body)
-        .then(users => res.json(users))
-        .catch(err => res.json(err))
-})
+app.post('/register', async (req, res) => {
+    try {
+        const user = await UserModel.create(req.body);
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(500).json({ error: 'Registration failed' });
+    }
+});
 
 
-app.post("/login", (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    UserModel.findOne({ email: email })
-        .then(user => {
-            if (user) {
-                if (user.password === password) {
-                    res.json("Success");
-                } else {
-                    res.json("Incorrect Password");
-                }
+    try {
+        const user = await UserModel.findOne({ email: email });
+        if (user) {
+            if (user.password === password) {
+                res.status(200).json({ message: 'Success' });
             } else {
-                res.json("No record existed");
+                res.status(401).json({ error: 'Incorrect Password' });
             }
-        })
-})
+        } else {
+            res.status(404).json({ error: 'No record found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Login failed' });
+    }
+});
 
 mongoose.connect(mongodb_uri).then(() => {
     console.log("Database Connected Successfully!");
